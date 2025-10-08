@@ -21,7 +21,7 @@ def hyp(X, w):
 
     # your code here
 
-    return
+    return np.dot(X, w)  # matrix multiplication
 
 
 #-----------------------------------------------------
@@ -64,15 +64,21 @@ def linear_regression_fit_NE(X, t):
     :param X: Design matrix
     :return: Linear regression weights
     '''
-    # TODO
-
+    X_t = np.transpose(X)
+    m = np.linalg.inv(np.dot(X_t, X))
+    aux = np.dot(m, X_t)
+    return np.dot(aux, t)
 
 # -----------------------------------------------------
 # Standardization
 # -----------------------------------------------------
-def standardize(X):
-    return (X - np.mean(X, axis=0)) / np.std(X, axis=0)
-
+def standardize(X, mean=None, std=None):
+    if mean is not None and std is not None:
+        return (X - mean) / std #axis = 0 for column-wise operation
+    else:
+        mean=np.mean(X, axis=0)
+        std=np.std(X, axis=0)
+        return (X - mean) / std, mean, std #axis = 0 for column-wise operation
 
 # -----------------------------------------------------
 # Min-Max Scaling
@@ -82,7 +88,7 @@ def min_max_scale(X):
     :param X: Design matrix
     :return: min-max scaled X
     '''
-    # TODO
+    return (X - np.mean(X, axis=0)) / (np.max(X, axis=0) - np.min(X, axis=0)) #axis = 0 for column-wise operation
 
 
 # -----------------------------------------------------
@@ -125,7 +131,7 @@ def MAE(t_true, t_hat):
     :param t_hat: predicted t
     :return: MAE
     '''
-    # TODO
+    return np.mean(np.abs(t_true - t_hat))
 
 
 # -----------------------------------------------------
@@ -137,7 +143,7 @@ def MSE(t_true, t_hat):
     :param t_hat: predicted t
     :return: MSE
     '''
-    # TODO
+    return np.mean((t_true - t_hat) ** 2)
 
 
 # -----------------------------------------------------
@@ -149,7 +155,7 @@ def RMSE(t_true, t_hat):
     :param t_hat: predicted t
     :return: RMSE
     '''
-    # TODO
+    return np.sqrt(MSE(t_true, t_hat))
 
 
 # -----------------------------------------------------
@@ -161,7 +167,9 @@ def R2(t_true, t_hat):
     :param t_hat: predicted t
     :return: R2
     '''
-    # TODO
+    ss_res = np.sum((t_true - t_hat) ** 2)
+    ss_tot = np.sum((t_true - np.mean(t_true)) ** 2)
+    return 1 - (ss_res / ss_tot)
 
 
 # -----------------------------------------------------
