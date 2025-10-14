@@ -35,9 +35,10 @@ def cost(t, X, w):
     :param w: Linear regression weights
     :return: The cost function for the given input data
     '''
-    # your code here
-
-    return
+    #l = np.sum((hyp(X, w) - t) ** 2) / 2
+    t_hat = hyp(X, w)
+    l = np.dot((t-t_hat).T, (t-t_hat)) / 2
+    return l
 
 #-----------------------------------------------------
 # Linear regression solver - gradient descent
@@ -51,9 +52,20 @@ def linear_regression_fit_GD(t, X, alpha, epsilon=0.001):
     :return:
     '''
 
-    # your code here
-
-    return
+    w_init = np.random.randn(X.shape[1]) # weights initialization
+    l_old = np.inf
+    l_new = cost(t, X, w_init)
+    iterations = 0
+    while np.abs(l_old - l_new) > epsilon and iterations < 1000:
+        iterations += 1
+        #l_grad = np.zeros(X.shape[1])
+        #for sample in range(X.shape[0]):
+        #    l_grad -= (t[sample]-hyp(X[sample, :], w_init)) * X[sample, :]
+        l_grad = -np.dot((t - hyp(X, w_init)), X)  # vectorized gradient computation
+        w_init = w_init - alpha * l_grad
+        l_old = l_new
+        l_new = cost(t, X, w_init)
+    return w_init
 
 # -----------------------------------------------------
 # Linear regression solver - LMS solution

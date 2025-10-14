@@ -40,20 +40,20 @@ print(w_NE)
 stop_NE = time()
 start_GD = time()
 # call GD linear regression
-w_GD = 0 #TODO
+w_GD = linear_regression_fit_GD(t_tr, X_tr, 0.01) #TODO
 stop_GD = time()
-print("theta from Normal Equation: ", w_NE, " in ", (stop_NE - start_NE) * 1000, ' ms')
-print("theta from Gradient Descent: ", w_GD, " in ", (stop_GD - start_GD) * 1000, ' ms')
+print("w from Normal Equation: ", w_NE, " in ", (stop_NE - start_NE) * 1000, ' ms')
+print("w from Gradient Descent: ", w_GD, " in ", (stop_GD - start_GD) * 1000, ' ms')
 
 ### Predict using the theta from Gradient Descent and Normal Equation
 t_hat_NE = hyp(X_te, w_NE)
-t_hat_GD = 0  # TODO
+t_hat_GD = hyp(X_te, w_GD)
 
 plt.figure('Hypotheses')
 plt.title('Hypotheses')
 plt.scatter(X_te[:, 1], t_te)
 plt.plot(X_te[:, 1], t_hat_NE, 'r', marker='o', label='NE',linestyle="None")
-#plt.plot(X_te[:, 1], t_hat_GD, 'g', marker='o', label='GD',linestyle="None")
+plt.plot(X_te[:, 1], t_hat_GD, 'g', marker='o', label='GD',linestyle="None")
 plt.legend()
 plt.show()
 
