@@ -4,8 +4,8 @@ import pandas as pd
 
 # vectorized sigmoid function
 def sigmoid(z):
-    #TODO
-    return
+    h = 1 / (1 + np.exp(-z))
+    return h
 
 # define useful check function
 def check_input(X,Y):
