@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('TkAgg')
-from logistic_regression import sigmoid, logistic_cost, vectorized_gradient, predict
+from logistic_regression import sigmoid, logistic_cost, vectorized_gradient, predict, gradient
 
 # Load test dataset
 path = 'ex2data1.txt'

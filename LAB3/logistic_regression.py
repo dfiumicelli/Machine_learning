@@ -22,19 +22,36 @@ def check_input(X,Y):
 
 # Logistic Regression Cost Function
 def logistic_cost(W, X, Y):
-    #TODO
-    return
+    #l = sum(Y * np.log(sigmoid(X @ W)) + (1 - Y) * np.log(1 - sigmoid(X @ W)))
+    h = sigmoid(np.dot(X, W))
+    cost = -np.dot(Y.T, np.log(h)) - np.dot((1-Y).T, np.log(1-h))
+
+    return cost
 
 # logistic regression cost gradient
 def vectorized_gradient(W, X, Y):
-    #TODO
-    return
+    W = W.reshape(W.shape[0], 1)
+    h = sigmoid(X @ W)
+    grad = (X.T @ (h - Y)).T
+    return grad
 
-def gradient(theta, X, y):
-    #TODO
-
-    return
+def gradient(W, X, Y):
+    W = np.matrix(W)
+    X = np.matrix(X)
+    Y = np.matrix(Y)
+    n_parameters = X.shape[1]
+    grad = np.zeros(n_parameters)
+    if W.shape[0] == n_parameters:
+        error = sigmoid(X @ W) - Y
+    else:
+        error = sigmoid(X @ W.T) - Y
+    for j in range(n_parameters):
+        term = np.multiply(error, X[:, j])
+        grad[j] = np.sum(term)
+    return grad
 
 def predict(W, X, Y):
-    #TODO
-    return
+    N = X.shape[0]
+    Y_hat = sigmoid(np.dot(X, W)) >= 0.5
+    accuracy = sum(Y_hat == Y)/N
+    return accuracy, Y_hat
