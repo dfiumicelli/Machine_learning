@@ -3,11 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('TkAgg')
-from logistic_regression import sigmoid, logistic_cost, vectorized_gradient, predict, gradient
+from LAB3.logistic_regression import (sigmoid, logistic_cost,
+                                      vectorized_gradient, predict)
 
 # Load test dataset
 path = 'ex2data1.txt'
-data = pd.read_csv(path, header=None, names=['Exam 1', 'Exam 2', 'Admitted'])
+data = pd.read_csv(path, header=None,
+                   names=['Exam 1', 'Exam 2', 'Admitted'])
 data.head()
 
 # visualize data:
@@ -45,11 +47,12 @@ c = vectorized_gradient(W,X,Y)
 
 # Test logistic regression gradient
 import scipy.optimize as opt
-result = opt.fmin_tnc(func=logistic_cost, x0=W, fprime=vectorized_gradient, args=(X, Y))
+result = opt.fmin_tnc(func=logistic_cost, x0=W, fprime=vectorized_gradient,
+                      args=(X, Y))
 print ('Logistic cost after optimization: ',logistic_cost(result[0], X, Y))
 
 # Predict with computed weights
-accuracy1, Y_hat = predict(result[0], X, np.array(Y).reshape(m,))
+accuracy1, t_hat = predict(result[0], X, np.array(Y).reshape(m,))
 # accuracy1 = sum(Y_hat == np.array(Y).reshape(m,))/(1.0*len(Y))
 print("Accuracy with Ours: ", accuracy1)
 
