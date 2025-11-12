@@ -34,6 +34,7 @@ t_te = labels_te
 
 t_hat = naive_bayes_class.predict_v(X_te)
 N_te = t_hat.shape[0]
+t_te = t_te.reshape(N_te, 1)
 print(sum(t_te == t_hat)/float(N_te))
 
 # predict probabilities
